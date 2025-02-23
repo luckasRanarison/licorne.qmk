@@ -4,13 +4,20 @@ on:
   push:
     branches:
       - master
+    paths:
+      - "keyboards/**/keymaps/**"
   pull_request:
     branches:
       - master
+    paths:
+      - "keyboards/**/keymaps/**"
 
 jobs:
   build-qmk:
     runs-on: ubuntu-latest
+    env:
+      QMK_KEYBOARD: crkbd/rev4_1/standard
+      QMK_KEYMAP: luckasranarison
 
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +30,7 @@ jobs:
           pip install qmk
           ./util/qmk_install.sh -y
           qmk setup -H ./
-          qmk config user.keyboard=crkbd/rev4_1/standard user.keymap=luckasranarison
+          qmk config user.keyboard=${{ env.QMK_KEYBOARD }} user.keymap=${{ env.QMK_KEYMAP }}
 
       - name: Lint
         run: qmk lint
