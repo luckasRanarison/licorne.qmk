@@ -1,4 +1,4 @@
-name: QMK build
+name: QMK firmware build
 
 on:
   push:
@@ -23,10 +23,13 @@ jobs:
           pip install qmk
           ./util/qmk_install.sh -y
           qmk setup -H ./
+          qmk config user.keyboard=crkbd/rev4_1/standard user.keymap=luckasranarison
+
+      - name: Lint
+        run: qmk lint
 
       - name: Compile firmware
         run: |
-          qmk config user.keyboard=crkbd/rev4_1/standard user.keymap=luckasranarison
           qmk generate-compilation-database
           qmk compile --compiledb
 
