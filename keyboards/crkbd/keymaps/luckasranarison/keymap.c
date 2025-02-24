@@ -31,6 +31,7 @@ enum custom_keycodes {
     KC_OR,                // ||
     KC_NULL,              // ??
     KC_DOTS,              // ...
+    KC_SCPE,              // ::
     KC_FISH,              // ::<_>()
     KC_MSE,               // Mouse layer toggle
 };
@@ -43,11 +44,12 @@ const char *custom_keys[] PROGMEM = {
     "!=",
     "!==",
     ">=",
-    "=<",
+    "<=",
     "&&",
     "||",
     "??",
     "...",
+    "::",
     "::<_>()",
 };
 
@@ -120,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [2] = LAYOUT_split_3x6_3( //                                 OPERATORS
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_FNEQ, XXXXXXX,                       KC_TEQ,  KC_LEQ,  KC_HEQ, KC_SARW, KC_FISH, _______,
+      _______, XXXXXXX, XXXXXXX, KC_SCPE, KC_FNEQ, XXXXXXX,                       KC_TEQ,  KC_LEQ,  KC_HEQ, KC_SARW, KC_FISH, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,  KC_AND,   KC_OR, KC_NULL, KC_SNEQ, XXXXXXX,                       KC_DEQ,  KC_INF,  KC_SUP, KC_FARW, KC_DOTS, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
