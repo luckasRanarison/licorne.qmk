@@ -53,6 +53,9 @@ const char *custom_keys[] PROGMEM = {
 
 #define TD_ENSH RSFT_T(KC_ENT)
 #define TD_MSFN LT(4, KC_MSE)
+#define TD_ZERO LT(2, KC_0)
+#define KC_INF LSFT(KC_COMM)
+#define KC_SUP LSFT(KC_DOT)
 
 enum combos {
     CB_LGUI,
@@ -74,7 +77,7 @@ const uint16_t PROGMEM cb_ralt[] = {KC_J, KC_L, COMBO_END};
 const uint16_t PROGMEM cb_rctl[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM cb_rsft[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM cb_rgui[] = {KC_L, KC_SCLN, COMBO_END};
-const uint16_t PROGMEM cb_oper[] = {OSL(6), MO(1), COMBO_END};
+const uint16_t PROGMEM cb_oper[] = {TD_MSFN, MO(1), COMBO_END};
 
 combo_t key_combos[] = {
     [CB_LGUI] = COMBO(cb_lgui, KC_LGUI),
@@ -90,7 +93,7 @@ combo_t key_combos[] = {
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT_split_3x6_3_ex2( //                                   BASE
+    [0] = LAYOUT_split_3x6_3_ex2( //                               BASE
   //,-----------------------------------------------------.--------.  ,--------------------------------------------------------------.
        KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, RM_NEXT,    XXXXXXX,    KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -110,16 +113,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, KC_TILD, KC_EXLM, KC_HASH, KC_PERC,   KC_AT,                      KC_AMPR,    KC_7,    KC_8,    KC_9,  KC_DLR, KC_CIRC,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, _______, _______,    _______,    KC_0,   MO(2)
+                                          XXXXXXX, _______, _______,    _______, TD_ZERO, XXXXXXX
                                       //`--------------------------'  `--------------------------'
 
   ),
 
-    [2] = LAYOUT_split_3x6_3( //                                OPERATORS
+    [2] = LAYOUT_split_3x6_3( //                                 OPERATORS
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_FNEQ, XXXXXXX,                      XXXXXXX,  KC_TEQ, KC_FISH, XXXXXXX, XXXXXXX, _______,
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_FNEQ, XXXXXXX,                       KC_TEQ,  KC_LEQ,  KC_HEQ, KC_SARW, KC_FISH, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,  KC_AND,   KC_OR, KC_NULL, KC_SNEQ, KC_SARW,                      KC_FARW,  KC_DEQ,  KC_LEQ,  KC_HEQ, KC_DOTS, XXXXXXX,
+      _______,  KC_AND,   KC_OR, KC_NULL, KC_SNEQ, XXXXXXX,                       KC_DEQ,  KC_INF,  KC_SUP, KC_FARW, KC_DOTS, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
