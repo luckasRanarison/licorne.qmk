@@ -17,6 +17,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
+#include "raw_hid.h"
+
+#define HID_MSG_LEN 32
+
+const char *layers[] PROGMEM = {
+    "BASE",
+    "SYMBOLS",
+    "OPERATORS",
+    "MOUSE",
+    "EDIT",
+    "FUNCTIONS",
+    "SECRETS",
+};
 
 enum custom_keycodes {
     KC_SARW = SAFE_RANGE, // ->
@@ -96,7 +109,7 @@ combo_t key_combos[] = {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_split_3x6_3_ex2( //                               BASE
-  //,-----------------------------------------------------.--------.  ,--------------------------------------------------------------.
+  //,--------------------------------------------------------------.  ,--------------------------------------------------------------.
        KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, RM_NEXT,    XXXXXXX,    KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
        KC_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G, RM_PREV,    XXXXXXX,    KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
@@ -107,50 +120,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-    [1] = LAYOUT_split_3x6_3( //                               SYMBOL/NUMBER
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_PIPE,                      KC_PLUS,    KC_1,    KC_2,    KC_3, KC_MINS, _______,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_ASTR, KC_SLSH, KC_LPRN, KC_RPRN, KC_BSLS,                       KC_EQL,    KC_4,    KC_5,    KC_6, KC_UNDS,  KC_GRV,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_TILD, KC_EXLM, KC_HASH, KC_PERC,   KC_AT,                      KC_AMPR,    KC_7,    KC_8,    KC_9,  KC_DLR, KC_CIRC,
+    [1] = LAYOUT_split_3x6_3_ex2( //                          SYMBOL/NUMBER
+  //,--------------------------------------------------------------.  ,--------------------------------------------------------------.
+      _______, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_PIPE, XXXXXXX,    XXXXXXX, KC_PLUS,    KC_1,    KC_2,    KC_3, KC_MINS, _______,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
+      _______, KC_ASTR, KC_SLSH, KC_LPRN, KC_RPRN, KC_BSLS, XXXXXXX,    XXXXXXX,  KC_EQL,    KC_4,    KC_5,    KC_6, KC_UNDS,  KC_GRV,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
+      _______, KC_EXLM, KC_TILD, KC_HASH, KC_PERC,   KC_AT,                      KC_AMPR,    KC_7,    KC_8,    KC_9,  KC_DLR, KC_CIRC,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, _______, _______,    _______, TD_ZERO, XXXXXXX
                                       //`--------------------------'  `--------------------------'
 
   ),
 
-    [2] = LAYOUT_split_3x6_3( //                                 OPERATORS
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, XXXXXXX, XXXXXXX, KC_SCPE, KC_FNEQ, XXXXXXX,                       KC_TEQ,  KC_LEQ,  KC_HEQ, KC_SARW, KC_FISH, _______,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,  KC_AND,   KC_OR, KC_NULL, KC_SNEQ, XXXXXXX,                       KC_DEQ,  KC_INF,  KC_SUP, KC_FARW, KC_DOTS, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+    [2] = LAYOUT_split_3x6_3_ex2( //                             OPERATORS
+  //,--------------------------------------------------------------.  ,--------------------------------------------------------------.
+      _______, XXXXXXX, XXXXXXX, KC_SCPE, KC_FNEQ, XXXXXXX, XXXXXXX,    XXXXXXX,  KC_TEQ,  KC_LEQ,  KC_HEQ, KC_SARW, KC_FISH, _______,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
+      _______,  KC_AND,   KC_OR, KC_NULL, KC_SNEQ, XXXXXXX, XXXXXXX,    XXXXXXX,  KC_DEQ,  KC_INF,  KC_SUP, KC_FARW, KC_DOTS, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, _______, _______,    _______, XXXXXXX, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
-    [3] = LAYOUT_split_3x6_3( //                                   MOUSE
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, MS_WHLU, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, MS_WHLL, MS_BTN2, MS_BTN1, MS_WHLR,                      MS_LEFT, MS_DOWN,   MS_UP, MS_RGHT, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+    [3] = LAYOUT_split_3x6_3_ex2( //                              MOUSE
+  //,--------------------------------------------------------------.  ,--------------------------------------------------------------.
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, MS_WHLU, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, MS_WHLL, MS_BTN2, MS_BTN1, MS_WHLR, XXXXXXX,    XXXXXXX, MS_LEFT, MS_DOWN,   MS_UP, MS_RGHT, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MS_WHLD, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX, KC_COPY,    _______,   TG(3), XXXXXXX
+                                          XXXXXXX,  KC_CUT, KC_COPY,    KC_PSTE,   TG(3), XXXXXXX
                                       //`--------------------------'  `--------------------------'
   ),
 
-    [4] = LAYOUT_split_3x6_3( //                                   EDIT
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       KC_INS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX,  KC_CUT, KC_PSTE, KC_COPY, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, KC_LCTL, KC_LSFT, KC_LALT, XXXXXXX,                       KC_DEL, KC_RALT, KC_RSFT, KC_RCTL, XXXXXXX, XXXXXXX,
+    [4] = LAYOUT_split_3x6_3_ex2( //                               EDIT
+  //,--------------------------------------------------------------.  ,--------------------------------------------------------------.
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RM_NEXT,    XXXXXXX,  KC_INS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX,  KC_CUT, KC_PSTE, KC_COPY, XXXXXXX, RM_PREV,    XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, KC_LALT, KC_LSFT, KC_LCTL, XXXXXXX,                       KC_DEL, KC_RCTL, KC_RSFT, KC_RALT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI, XXXXXXX, XXXXXXX,    XXXXXXX, _______, XXXXXXX
                                       //`--------------------------'  `--------------------------'
@@ -168,12 +181,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-    [6] = LAYOUT_split_3x6_3( //                               MACRO/SECRETS
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      QK_BOOT, XXXXXXX, XXXXXXX,    MC_0, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    MC_2, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+    [6] = LAYOUT_split_3x6_3_ex2( //                           MACRO/SECRETS
+  //,--------------------------------------------------------------.  ,--------------------------------------------------------------.
+      QK_BOOT, XXXXXXX, XXXXXXX,    MC_0, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    MC_2, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                         MC_1, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
@@ -200,7 +213,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         break;
     }
+
     // TODO: Implement macros with a secret system
 
     return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    char msg[HID_MSG_LEN] = "msg:layer:";
+    uint8_t length = strlen(msg);
+    uint8_t layer_index = get_highest_layer(state);
+    char *layer_name = pgm_read_ptr(&layers[layer_index]);
+
+    snprintf(msg + length, sizeof(msg) - length, "%s", layer_name);
+    raw_hid_send((uint8_t *)msg, HID_MSG_LEN);
+
+    return state;
 }

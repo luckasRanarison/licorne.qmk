@@ -1,0 +1,8 @@
+{
+  "name": "Licorne QMK GNOME",
+  "description": "GNOME Desktop integration for licorne.qmk",
+  "uuid": "licorne-qmk-gnome@luckasranarison.com",
+  "url": "https://github.com/luckasranarison/licorne.qmk",
+  "settings-schema": "org.gnome.shell.extensions.licorne-qmk-gnome",
+  "shell-version": ["46"]
+}

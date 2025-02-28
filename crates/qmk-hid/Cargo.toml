@@ -1,0 +1,10 @@
+[package]
+name = "qmk-hid"
+version = "0.1.0"
+edition = "2024"
+author = ["LIOKA Ranarison Fiderana <luckasranarison@gmail.com>"]
+description = "A simple command line for listening QMK raw HID message streams"
+
+[dependencies]
+clap = { version = "4.5.31", features = ["derive"] }
+hidapi = "2.6.3"

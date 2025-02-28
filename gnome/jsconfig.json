@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "checkJs": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": [
+      "ES2022"
+    ]
+  },
+  "include": [
+    "src/**/*.js",
+    "ambient.d.ts"
+  ]
+}

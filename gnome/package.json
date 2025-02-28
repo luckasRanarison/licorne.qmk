@@ -1,0 +1,22 @@
+{
+  "name": "licorne-qmk-gnome",
+  "version": "0.1.0",
+  "description": "Licorne QMK integration for GNOME Desktop",
+  "type": "module",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luckasranarison/licorne.qmk"
+  },
+  "author": "LIOKA Ranarison Fiderana <luckasranarison@gmail.com>",
+  "license": "ISC",
+  "sideEffects": false,
+  "devDependencies": {
+    "eslint": "^9.21.0",
+    "eslint-plugin-jsdoc": "^50.6.3"
+  },
+  "dependencies": {
+    "@girs/gjs": "^4.0.0-beta.21",
+    "@girs/gnome-shell": "^47.0.2"
+  }
+}
