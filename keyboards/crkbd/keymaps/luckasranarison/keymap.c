@@ -82,6 +82,7 @@ enum combos {
     CB_RSFT,
     CB_RGUI,
     CB_OPER,
+    CB_CAPS,
 };
 
 const uint16_t PROGMEM cb_lgui[] = {KC_A, KC_S, COMBO_END};
@@ -93,6 +94,7 @@ const uint16_t PROGMEM cb_rctl[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM cb_rsft[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM cb_rgui[] = {KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM cb_oper[] = {TD_MSFN, MO(1), COMBO_END};
+const uint16_t PROGMEM cb_caps[] = {TD_ENSH, KC_SPACE, COMBO_END};
 
 combo_t key_combos[] = {
     [CB_LGUI] = COMBO(cb_lgui, KC_LGUI),
@@ -104,6 +106,7 @@ combo_t key_combos[] = {
     [CB_RSFT] = COMBO(cb_rsft, KC_RSFT),
     [CB_RGUI] = COMBO(cb_rgui, KC_RGUI),
     [CB_OPER] = COMBO(cb_oper, MO(2)),
+    [CB_CAPS] = COMBO(cb_caps, KC_CAPS),
 };
 
 // clang-format off
