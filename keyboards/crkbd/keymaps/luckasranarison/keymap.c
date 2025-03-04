@@ -71,6 +71,7 @@ const char *custom_keys[] PROGMEM = {
 #define TD_ZERO LT(2, KC_0)
 #define KC_INF LSFT(KC_COMM)
 #define KC_SUP LSFT(KC_DOT)
+#define KC_COMP KC_CAPS // OS-level compose key
 
 enum combos {
     CB_LGUI,
@@ -82,7 +83,7 @@ enum combos {
     CB_RSFT,
     CB_RGUI,
     CB_OPER,
-    CB_CAPS,
+    CB_SECR,
 };
 
 const uint16_t PROGMEM cb_lgui[] = {KC_A, KC_S, COMBO_END};
@@ -94,7 +95,7 @@ const uint16_t PROGMEM cb_rctl[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM cb_rsft[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM cb_rgui[] = {KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM cb_oper[] = {TD_MSFN, MO(1), COMBO_END};
-const uint16_t PROGMEM cb_caps[] = {TD_ENSH, KC_SPACE, COMBO_END};
+const uint16_t PROGMEM cb_secr[] = {MO(5), KC_CAPS, COMBO_END};
 
 combo_t key_combos[] = {
     [CB_LGUI] = COMBO(cb_lgui, KC_LGUI),
@@ -106,7 +107,7 @@ combo_t key_combos[] = {
     [CB_RSFT] = COMBO(cb_rsft, KC_RSFT),
     [CB_RGUI] = COMBO(cb_rgui, KC_RGUI),
     [CB_OPER] = COMBO(cb_oper, MO(2)),
-    [CB_CAPS] = COMBO(cb_caps, KC_CAPS),
+    [CB_SECR] = COMBO(cb_secr, OSL(6)),
 };
 
 // clang-format off
@@ -117,19 +118,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
        KC_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G, RM_PREV,    XXXXXXX,    KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,
+      XXXXXXX,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            MO(5),   MO(1),  KC_SPC,    TD_ENSH, TD_MSFN,  OSL(6)
+                                            MO(5),   MO(1),  KC_SPC,    TD_ENSH, TD_MSFN, KC_COMP
                                       //`--------------------------'  `--------------------------'
   ),
 
     [1] = LAYOUT_split_3x6_3_ex2( //                          SYMBOL/NUMBER
   //,--------------------------------------------------------------.  ,--------------------------------------------------------------.
-      _______, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_PIPE, XXXXXXX,    XXXXXXX, KC_PLUS,    KC_1,    KC_2,    KC_3, KC_MINS, _______,
+      _______, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_CIRC, XXXXXXX,    XXXXXXX, KC_PLUS,    KC_1,    KC_2,    KC_3, KC_MINS, _______,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-      _______, KC_ASTR, KC_SLSH, KC_LPRN, KC_RPRN, KC_BSLS, XXXXXXX,    XXXXXXX,  KC_EQL,    KC_4,    KC_5,    KC_6, KC_UNDS,  KC_GRV,
+      _______, KC_ASTR, KC_BSLS, KC_LPRN, KC_RPRN, KC_PIPE, XXXXXXX,    XXXXXXX,  KC_EQL,    KC_4,    KC_5,    KC_6, KC_UNDS,  KC_GRV,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-      _______, KC_EXLM, KC_TILD, KC_HASH, KC_PERC,   KC_AT,                      KC_AMPR,    KC_7,    KC_8,    KC_9,  KC_DLR, KC_CIRC,
+      XXXXXXX, KC_EXLM, KC_TILD, KC_HASH, KC_PERC,   KC_AT,                      KC_AMPR,    KC_7,    KC_8,    KC_9,  KC_DLR, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, _______, _______,    _______, TD_ZERO, XXXXXXX
                                       //`--------------------------'  `--------------------------'
