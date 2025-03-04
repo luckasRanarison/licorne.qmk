@@ -10,6 +10,6 @@
   },
   "include": [
     "src/**/*.js",
-    "ambient.d.ts"
+    "types/*.d.ts"
   ]
 }

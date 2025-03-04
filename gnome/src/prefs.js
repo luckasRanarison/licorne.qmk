@@ -15,46 +15,46 @@ export default class GnomeRectanglePreferences extends ExtensionPreferences {
       iconName: "dialog-information-symbolic",
     });
 
-    const animationGroup = new Adw.PreferencesGroup({
-      title: _("Animation"),
-      description: _("Configure move/resize animation"),
+    const idsGroup = new Adw.PreferencesGroup({
+      title: _("IDs"),
+      description: _("Configure the keyboard HID IDs"),
     });
-    page.add(animationGroup);
 
-    const animationEnabled = new Adw.SwitchRow({
-      title: _("Enabled"),
-      subtitle: _("Wether to animate windows"),
-    });
-    animationGroup.add(animationEnabled);
-
-    const paddingGroup = new Adw.PreferencesGroup({
-      title: _("Paddings"),
-      description: _("Configure the padding between windows"),
-    });
-    page.add(paddingGroup);
-
-    const paddingInner = new Adw.SpinRow({
-      title: _("Inner"),
-      subtitle: _("Padding between windows"),
+    const vendorId = new Adw.SpinRow({
+      title: _("Vendor ID"),
+      subtitle: _("Keyboard vendor ID"),
       adjustment: new Gtk.Adjustment({
         lower: 0,
-        upper: 1000,
-        stepIncrement: 1,
+        upper: 0xffff,
+        step_increment: 1,
       }),
     });
-    paddingGroup.add(paddingInner);
 
+    const productId = new Adw.SpinRow({
+      title: _("Product ID"),
+      subtitle: _("Keyboard product ID"),
+      adjustment: new Gtk.Adjustment({
+        lower: 0,
+        upper: 0xffff,
+        step_increment: 1,
+      }),
+    });
+
+    idsGroup.add(vendorId);
+    idsGroup.add(productId);
+
+    page.add(idsGroup);
     window.add(page);
 
     this._settings.bind(
-      "animate",
-      animationEnabled,
-      "active",
+      "vendor-id",
+      vendorId,
+      "value",
       Gio.SettingsBindFlags.DEFAULT,
     );
     this._settings.bind(
-      "padding-inner",
-      paddingInner,
+      "product-id",
+      productId,
       "value",
       Gio.SettingsBindFlags.DEFAULT,
     );

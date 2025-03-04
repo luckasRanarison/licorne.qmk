@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schemalist>
   <schema id="org.gnome.shell.extensions.licorne-qmk-gnome" path="/org/gnome/shell/extensions/licorne-qmk-gnome/">
-    <key name="padding-inner" type="i">
-      <default>8</default>
-      <summary>Inner padding</summary>
-      <description>Padding between windows</description>
+    <key name="vendor-id" type="i">
+      <default>18003</default>
+      <summary>vendor ID</summary>
+      <description>Keyboard vendor ID</description>
     </key>
-    <key name="animate" type="b">
-      <default>true</default>
-      <summary>Animation</summary>
-      <description>Whether to animate window movement/resizing</description>
+    <key name="product-id" type="i">
+      <default>4</default>
+      <summary>product ID</summary>
+      <description>Keyboard product ID</description>
     </key>
   </schema>
 </schemalist>
