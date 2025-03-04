@@ -4,7 +4,6 @@ import GLib from "gi://GLib";
 class QmkHidMessenger {
   /**
    * @param process {import("gi://Gio").default.Subprocess}
-   * @param stdout {import("gi://Gio").default.DataInputStream}
    */
   constructor(process) {
     const stdoutPipe = process.get_stdout_pipe();
