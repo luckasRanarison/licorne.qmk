@@ -18,7 +18,7 @@ struct Cli {
     #[clap(default_value_t = 0xFF60)]
     usage_page: u16,
 
-    #[clap(default_value_t = 1000)]
+    #[clap(default_value_t = 5000)]
     poll_interval: u64,
 }
 
