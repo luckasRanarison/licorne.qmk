@@ -77,24 +77,6 @@ CMakeLists.txt
 .vscode/temp.sql
 tags
 
-# Ignore image/font files
-*.bmp
-*.wbmp
-*.gif
-*.jpg
-*.jpeg
-*.png
-*.apng
-*.mng
-*.svg
-*.webp
-*.webm
-*.avi
-*.mp4
-*.mpeg
-*.ttf
-*.otf
-
 # Things Travis sees
 /.vs
 id_rsa_*
