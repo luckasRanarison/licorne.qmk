@@ -6,6 +6,13 @@ My personal custom QMK firmware and [configuration](./keyboards/crkbd/keymaps/lu
 
 ![Licorne](./assets/licorne.jpg)
 
+## Keymaps
+
+> [!NOTE]
+> `Comp Key` resolves to `Caps Lock` but it is used as a [compose key](https://en.wikipedia.org/wiki/Compose_key) for typing non-standard english characters.
+
+![Keymaps](././keyboards/crkbd/keymaps/luckasranarison/keymap.svg)
+
 ## Add-ons
 
 ### GNOME Desktop integration
@@ -17,5 +24,4 @@ Adds a VIM like layer indicator as a tray icon on the left of the GNOME panel, u
 
 ## TODOs
 
-- Keymaps and layers preview
 - Condition based RGB effects
