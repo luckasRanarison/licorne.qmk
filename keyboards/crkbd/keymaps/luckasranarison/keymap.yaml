@@ -1,31 +1,31 @@
 layout:
-  qmk_keyboard: crkbd/rev4_1
+  qmk_keyboard: corne_rotated
   layout_name: LAYOUT_split_3x6_3_ex2
 
 layers:
   BASE:
     [
-      Esc,
+      $$mdi:keyboard-esc$$,
       Q,
       W,
       E,
       R,
       T,
-      RGB Next,
+      $$mdi:animation$$,
       "",
       Y,
       U,
       I,
       O,
       P,
-      Bspace,
-      Tab,
+      $$mdi:backspace$$,
+      $$mdi:keyboard-tab$$,
       A,
       S,
       D,
       F,
       G,
-      RGB Prev,
+      $$mdi:animation-outline$$,
       "",
       H,
       J,
@@ -47,8 +47,8 @@ layers:
       "",
       FUNC,
       SYMB,
-      Space,
-      { t: Enter, h: Shift },
+      $$mdi:keyboard-space$$,
+      { t: $$mdi:keyboard-return$$, h: Shift },
       { t: MOSE, h: EDIT },
       { t: Comp Key, type: ghost },
     ]
@@ -151,7 +151,7 @@ layers:
     - ""
     - ""
     - ""
-    - Wheel Up
+    - $$mdi:chevron-double-up$$
     - ""
     - ""
     - ""
@@ -163,23 +163,23 @@ layers:
     - { t: ▽, type: trans }
     - ""
     - ""
-    - Wheel Left
-    - Left Click
-    - Right Click
-    - Wheel Right
+    - $$mdi:chevron-double-left$$
+    - $$mdi:mouse-left-click$$
+    - $$mdi:mouse-right-click$$
+    - $$mdi:chevron-double-right$$
     - ""
     - ""
-    - Mouse Left
-    - Mouse Down
-    - Mouse Up
-    - Mouse Right
-    - ""
-    - ""
-    - ""
+    - $$mdi:arrow-left-thick$$
+    - $$mdi:mouse-move-down$$
+    - $$mdi:mouse-move-up$$
+    - $$mdi:arrow-right-thick$$
     - ""
     - ""
     - ""
-    - Wheel Down
+    - ""
+    - ""
+    - ""
+    - $$mdi:chevron-double-down$$
     - ""
     - ""
     - ""
@@ -207,7 +207,7 @@ layers:
     - ""
     - ""
     - ""
-    - Del
+    - $$mdi:delete$$
     - ""
     - ""
     - ""
@@ -216,10 +216,10 @@ layers:
     - ""
     - ""
     - ""
-    - Left
-    - Down
-    - Up
-    - Rght
+    - $$mdi:arrow-left-thick$$
+    - $$mdi:arrow-down-thick$$
+    - $$mdi:arrow-up-thick$$
+    - $$mdi:arrow-right-thick$$
     - ""
     - ""
     - ""
@@ -241,46 +241,46 @@ layers:
     - { type: held }
     - ""
   FUNC:
-    - RGB Toggle
+    - $$mdi:wall-sconce-flat-variant$$
     - ""
     - ""
     - ""
-    - Print Scr
-    - Mute
-    - Vol Up
-    - Bri Up
-    - Power
+    - $$mdi:monitor-screenshot$$
+    - $$mdi:volume-off$$
+    - $$mdi:volume-plus$$
+    - $$mdi:brightness-5$$
+    - $$mdi:power$$
     - F1
     - F2
     - F3
     - F10
-    - Home
-    - Speed Up
-    - Hue Up
-    - Sat Up
-    - Val Up
-    - Media Prev
-    - Media Next
-    - Vol Down
-    - Bri Down
-    - Sleep
+    - $$mdi:home$$
+    - $$mdi:speedometer$$
+    - $$mdi:palette$$
+    - $$mdi:palette-swatch$$
+    - $$mdi:octagram-plus$$
+    - $$mdi:skip-previous$$
+    - $$mdi:skip-next$$
+    - $$mdi:volume-minus$$
+    - $$mdi:brightness-6$$
+    - $$mdi:power-sleep$$
     - F4
     - F5
     - F6
     - F11
-    - Page Up
-    - Speed Down
-    - Hue Down
-    - Sat Down
-    - Val Down
-    - Stop
-    - Play
-    - Wake
+    - $$mdi:menu-up$$
+    - $$mdi:speedometer-slow$$
+    - $$mdi:palette-outline$$
+    - $$mdi:palette-swatch-outline$$
+    - $$mdi:octagram-minus$$
+    - $$mdi:stop$$
+    - $$mdi:play$$
+    - $$mdi:bed-clock$$
     - F7
     - F8
     - F9
     - F12
-    - Page Down
+    - $$mdi:menu-down$$
     - { type: held }
     - ""
     - ""
@@ -292,8 +292,8 @@ combos:
   - { p: [15, 16], k: "Gui", l: ["BASE"] }
   - { p: [16, 17], k: "Shift", l: ["BASE"] }
   - { p: [17, 18], k: "Ctrl", l: ["BASE"] }
-  - { p: [16, 18], k: "Alt", l: ["BASE"] }
-  - { p: [23, 25], k: "Alt", l: ["BASE"] }
+  - { p: [16, 18], k: "Alt", align: "top", l: ["BASE"] }
+  - { p: [23, 25], k: "Alt", align: "top", l: ["BASE"] }
   - { p: [25, 26], k: "Gui", l: ["BASE"] }
   - { p: [24, 25], k: "Shift", l: ["BASE"] }
   - { p: [23, 24], k: "Ctr", l: ["BASE"] }
