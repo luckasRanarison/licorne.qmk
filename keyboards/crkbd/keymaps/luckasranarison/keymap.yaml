@@ -4,54 +4,52 @@ layout:
 
 layers:
   BASE:
-    [
-      $$mdi:keyboard-esc$$,
-      Q,
-      W,
-      E,
-      R,
-      T,
-      $$mdi:animation$$,
-      "",
-      Y,
-      U,
-      I,
-      O,
-      P,
-      $$mdi:backspace$$,
-      $$mdi:keyboard-tab$$,
-      A,
-      S,
-      D,
-      F,
-      G,
-      $$mdi:animation-outline$$,
-      "",
-      H,
-      J,
-      K,
-      L,
-      ;,
-      "'",
-      "",
-      Z,
-      X,
-      C,
-      V,
-      B,
-      N,
-      M,
-      ",",
-      .,
-      /,
-      "",
-      FUNC,
-      SYMB,
-      $$mdi:keyboard-space$$,
-      { t: $$mdi:keyboard-return$$, h: Shift },
-      { t: MOSE, h: EDIT },
-      { t: Comp Key, type: ghost },
-    ]
+    - $$mdi:keyboard-esc$$
+    - Q
+    - W
+    - E
+    - R
+    - T
+    - $$mdi:animation$$
+    - ""
+    - Y
+    - U
+    - I
+    - O
+    - P
+    - $$mdi:backspace$$
+    - $$mdi:keyboard-tab$$
+    - A
+    - S
+    - D
+    - F
+    - G
+    - $$mdi:animation-outline$$
+    - ""
+    - H
+    - J
+    - K
+    - L
+    - ": ;"
+    - '" '''
+    - ""
+    - Z
+    - X
+    - C
+    - V
+    - B
+    - N
+    - M
+    - ","
+    - .
+    - "? /"
+    - ""
+    - FUNC
+    - SYMB
+    - $$mdi:keyboard-space$$
+    - { t: $$mdi:keyboard-return$$, h: Shift }
+    - { t: MOSE, h: EDIT }
+    - { t: Comp Key, type: ghost }
   SYMB:
     - { t: ▽, type: trans }
     - "["
