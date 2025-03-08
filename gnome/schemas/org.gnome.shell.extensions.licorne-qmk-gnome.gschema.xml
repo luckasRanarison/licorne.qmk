@@ -11,5 +11,10 @@
       <summary>product ID</summary>
       <description>Keyboard product ID</description>
     </key>
+    <key name="wpm-interval" type="i">
+      <default>1500</default>
+      <summary>WPM interval</summary>
+      <description>WPM poll interval</description>
+    </key>
   </schema>
 </schemalist>

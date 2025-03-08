@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
+
 #include "raw_hid.h"
 
 #define HID_MSG_LEN 32
@@ -199,8 +200,54 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
+typedef struct {
+    char *type;
+    char *payload;
+} HidRequest;
+
+void send_hid_message(const char *type, const char *payload) {
+    char msg[HID_MSG_LEN] = "msg";
+
+    snprintf(msg + 3, sizeof(msg) - 3, ":%s:%s", type, payload);
+    raw_hid_send((uint8_t *)msg, HID_MSG_LEN);
+}
+
+bool parse_hid_request(HidRequest *request, uint8_t *data) {
+    char *token = strtok((char *)data, ":");
+
+    if (token == NULL || strcmp(token, "req") != 0) {
+        return false;
+    }
+
+    request->type = strtok(NULL, ":");
+
+    if (request->type == NULL) {
+        return false;
+    }
+
+    request->payload = strtok(NULL, ":");
+
+    return true;
+}
+
+void raw_hid_receive(uint8_t *data, uint8_t _length) {
+    HidRequest request;
+
+    if (parse_hid_request(&request, data) == false) {
+        return;
+    }
+
+    if (strcmp(request.type, "wpm") == 0) {
+        char wpm_str[4]; // 1-3 digits + null terminator
+        uint8_t wpm = get_current_wpm();
+
+        sprintf(wpm_str, "%u", wpm);
+        send_hid_message("wpm", wpm_str);
+    }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    char *key;
+    const char *key;
 
     switch (keycode) {
     case TD_MSFN:
@@ -211,7 +258,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
     case KC_SARW ... KC_FISH:
         if (record->event.pressed) {
-            key = pgm_read_ptr(&custom_keys[keycode - SAFE_RANGE]);
+            key = (const char *)pgm_read_ptr(&custom_keys[keycode - SAFE_RANGE]);
             SEND_STRING(key);
             return false;
         }
@@ -224,13 +271,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    char msg[HID_MSG_LEN] = "msg:layer:";
-    uint8_t length = strlen(msg);
     uint8_t layer_index = get_highest_layer(state);
-    char *layer_name = pgm_read_ptr(&layers[layer_index]);
+    const char *layer_name = (const char *)pgm_read_ptr(&layers[layer_index]);
 
-    snprintf(msg + length, sizeof(msg) - length, "%s", layer_name);
-    raw_hid_send((uint8_t *)msg, HID_MSG_LEN);
+    send_hid_message("layer", layer_name);
 
     return state;
 }

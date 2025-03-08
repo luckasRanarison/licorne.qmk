@@ -20,28 +20,33 @@ export default class GnomeRectanglePreferences extends ExtensionPreferences {
       description: _("Configure the keyboard HID IDs"),
     });
 
+    const adjustment = new Gtk.Adjustment({
+      lower: 0,
+      upper: 0xffff,
+      step_increment: 1,
+    });
+
     const vendorId = new Adw.SpinRow({
       title: _("Vendor ID"),
       subtitle: _("Keyboard vendor ID"),
-      adjustment: new Gtk.Adjustment({
-        lower: 0,
-        upper: 0xffff,
-        step_increment: 1,
-      }),
+      adjustment,
     });
 
     const productId = new Adw.SpinRow({
       title: _("Product ID"),
       subtitle: _("Keyboard product ID"),
-      adjustment: new Gtk.Adjustment({
-        lower: 0,
-        upper: 0xffff,
-        step_increment: 1,
-      }),
+      adjustment,
+    });
+
+    const wpmInterval = new Adw.SpinRow({
+      title: _("WPM interval"),
+      subtitle: _("WPM poll interval"),
+      adjustment,
     });
 
     idsGroup.add(vendorId);
     idsGroup.add(productId);
+    idsGroup.add(wpmInterval);
 
     page.add(idsGroup);
     window.add(page);
@@ -58,7 +63,12 @@ export default class GnomeRectanglePreferences extends ExtensionPreferences {
       "value",
       Gio.SettingsBindFlags.DEFAULT,
     );
-
+    this._settings.bind(
+      "wpm-interval",
+      wpmInterval,
+      "value",
+      Gio.SettingsBindFlags.DEFAULT,
+    );
     return Promise.resolve();
   }
 }

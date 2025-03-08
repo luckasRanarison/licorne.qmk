@@ -7,8 +7,9 @@ class QmkHidMessenger {
    */
   constructor(process) {
     const stdoutPipe = process.get_stdout_pipe();
+    const stdinPipe = process.get_stdin_pipe();
 
-    if (!stdoutPipe) {
+    if (!stdoutPipe || !stdinPipe) {
       throw new Error("Could not get stdout handle of the qmk-hid command");
     }
 
@@ -17,6 +18,7 @@ class QmkHidMessenger {
       close_base_stream: true,
     });
 
+    this.stdin = stdinPipe;
     this.process = process;
   }
 
@@ -28,7 +30,7 @@ class QmkHidMessenger {
   static init(vendorId, productId, onMessage) {
     const process = Gio.Subprocess.new(
       ["qmk-hid", "-v", `${vendorId}`, "-p", `${productId}`],
-      Gio.SubprocessFlags.STDOUT_PIPE,
+      Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDIN_PIPE,
     );
 
     const messenger = new QmkHidMessenger(process);
@@ -37,8 +39,19 @@ class QmkHidMessenger {
     return messenger;
   }
 
+  /**
+   * @param params {HidRequest}
+   */
+  send({ type, payload }) {
+    const cancellable = new Gio.Cancellable();
+    const message = `req:${type}${payload ? ":" + payload : ""}\n`;
+
+    this.stdin.write_all(message, cancellable);
+  }
+
   destroy() {
     this.process.force_exit();
+    this.process.wait();
   }
 
   /**
