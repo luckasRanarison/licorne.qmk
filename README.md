@@ -17,7 +17,7 @@ My personal custom QMK firmware and [configuration](./keyboards/crkbd/keymaps/lu
 
 ### GNOME Desktop integration
 
-Adds a VIM like layer indicator as a tray icon on the left of the GNOME panel, using the [raw hid](https://docs.qmk.fm/features/rawhid) feature.
+Adds a VIM like layer indicator and a WPM indicator as a tray icon on the left of the GNOME panel, using [qmk-hid](https://github.com/luckasRanarison/qmk-hid/).
 
 ![Extension preview](./assets/extension-2.png)
 ![Extension preview](./assets/extension-1.png)
