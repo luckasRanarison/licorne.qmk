@@ -50,8 +50,10 @@ class QmkHidMessenger {
   }
 
   destroy() {
+    const cancellable = new Gio.Cancellable();
+
     this.process.force_exit();
-    this.process.wait();
+    this.process.wait(cancellable);
   }
 
   /**
