@@ -44,10 +44,16 @@ enum custom_keycodes {
     KC_AND,               // &&
     KC_OR,                // ||
     KC_NULL,              // ??
+    KC_SAFE,              // ?.
+    KC_DSLS,              // //
+    KC_PLEQ,              // +=
+    KC_MNEQ,              // -=
     KC_DOTS,              // ...
+    KC_GRVS,              // ```
     KC_SCPE,              // ::
     KC_FISH,              // ::<_>()
     KC_MSE,               // Mouse layer toggle
+    KC_CTCK,              // CTRL + Right click
 };
 
 const char *custom_keys[] PROGMEM = {
@@ -62,7 +68,12 @@ const char *custom_keys[] PROGMEM = {
     "&&",
     "||",
     "??",
+    "?.",
+    "//",
+    "+=",
+    "-=",
     "...",
+    "```",
     "::",
     "::<_>()",
 };
@@ -85,6 +96,7 @@ enum combos {
     CB_RGUI,
     CB_OPER,
     CB_SECR,
+    CB_CTCK,
 };
 
 const uint16_t PROGMEM cb_lgui[] = {KC_A, KC_S, COMBO_END};
@@ -97,6 +109,7 @@ const uint16_t PROGMEM cb_rsft[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM cb_rgui[] = {KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM cb_oper[] = {TD_MSFN, MO(1), COMBO_END};
 const uint16_t PROGMEM cb_secr[] = {MO(5), KC_CAPS, COMBO_END};
+const uint16_t PROGMEM cb_ctck[] = {MS_BTN1, MS_BTN2, COMBO_END};
 
 combo_t key_combos[] = {
     [CB_LGUI] = COMBO(cb_lgui, KC_LGUI),
@@ -109,6 +122,7 @@ combo_t key_combos[] = {
     [CB_RGUI] = COMBO(cb_rgui, KC_RGUI),
     [CB_OPER] = COMBO(cb_oper, MO(2)),
     [CB_SECR] = COMBO(cb_secr, OSL(6)),
+    [CB_CTCK] = COMBO(cb_ctck, KC_CTCK),
 };
 
 // clang-format off
@@ -138,11 +152,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   ),
 
-    [2] = LAYOUT_split_3x6_3_ex2( //                             OPERATORS
+    [2] = LAYOUT_split_3x6_3_ex2( //                             COMPOSITES
   //,--------------------------------------------------------------.  ,--------------------------------------------------------------.
-      _______, XXXXXXX, XXXXXXX, KC_SCPE, KC_FNEQ, XXXXXXX, XXXXXXX,    XXXXXXX,  KC_TEQ,  KC_LEQ,  KC_HEQ, KC_SARW, KC_FISH, _______,
-  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-      _______,  KC_AND,   KC_OR, KC_NULL, KC_SNEQ, XXXXXXX, XXXXXXX,    XXXXXXX,  KC_DEQ,  KC_INF,  KC_SUP, KC_FARW, KC_DOTS, XXXXXXX,
+      _______, KC_SAFE, KC_DSLS, KC_SCPE, KC_MNEQ, KC_FNEQ, XXXXXXX,    XXXXXXX,  KC_TEQ,  KC_LEQ,  KC_HEQ, KC_SARW, KC_FISH, _______,
+  //|--------+--------+--------+--------+---------------+-|--------|  |--------+--------+--------+--------+--------+--------+--------|
+      _______,  KC_AND,   KC_OR, KC_NULL, KC_PLEQ, KC_SNEQ, XXXXXXX,    XXXXXXX,  KC_DEQ,  KC_INF,  KC_SUP, KC_FARW, KC_DOTS, KC_GRVS,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -253,6 +267,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TD_MSFN:
         if (record->tap.count && record->event.pressed) {
             layer_invert(3);
+            return false;
+        }
+        break;
+    case KC_CTCK:
+        if (record->event.pressed) {
+            tap_code16(LCTL(MS_BTN1));
             return false;
         }
         break;
